@@ -10,7 +10,7 @@ with open('README.rst', 'r') as f:
 
 
 setup(
-    name='sentry_telegram',
+    name='sentry_telegram_fx',
     version=__version__,
     packages=['sentry_telegram'],
     url='https://github.com/butorov/sentry-telegram',
