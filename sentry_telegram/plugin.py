@@ -101,7 +101,7 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
 
     def build_message(self, group, event):
         the_tags = defaultdict(lambda: '[NA]')
-        the_tags.update({k:v for k, v in event.tags})
+        the_tags.update({k: v for k, v in event.tags})
         names = {
             'title': event.title,
             'tag': the_tags,
