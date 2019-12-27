@@ -109,9 +109,9 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
             'project_name': group.project.name,
             'url': group.get_absolute_url(),
         }
-        names['title'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
-        names['message'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
-        names['project_name'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
+        names['title'] = names['title'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
+        names['message'] = names['message'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
+        names['project_name'] = names['project_name'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
 
         template = self.get_message_template(group.project)
 
