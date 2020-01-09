@@ -13,7 +13,7 @@ setup(
     name='sentry_telegram_aputilov',
     version=__version__,
     packages=['sentry_telegram'],
-    url='https://github.com/butorov/sentry-telegram',
+    url='https://github.com/m8rge/sentry-telegram',
     author='Viacheslav Butorov',
     author_email='butorovv@gmail.com',
     description='Plugin for Sentry which allows sending notification via Telegram messenger.',
