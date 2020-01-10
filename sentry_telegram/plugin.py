@@ -9,8 +9,6 @@ from sentry.plugins.bases import notify
 from sentry.http import safe_urlopen
 from sentry.utils.safe import safe_execute
 
-from markdown_strings import esc_format
-
 from . import __version__, __doc__ as package_doc
 
 
@@ -94,10 +92,10 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
                 'label': 'Message Template',
                 'type': 'textarea',
                 'help': 'Set in standard python\'s {}-format convention, available names are: '
-                    '{project_name}, {url}, {title}, {message}, {tag[%your_tag%]}. Undefined tags will be shown as [NA]',
+                        '{project_name}, {url}, {title}, {message}, {tag[%your_tag%]}. Undefined tags will be shown as [NA]',
                 'validators': [],
                 'required': True,
-                'default': '*[Sentry]* {project_name} {tag[level]}: *{title}*\n```{message}```\n{url}'
+                'default': '*[Sentry]* {project_name} {tag[level]}: *{title}*\n``` {message}```\n{url}'
             },
         ]
 
@@ -155,3 +153,12 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
         self.logger.debug('Built url: %s' % url)
         for receiver in receivers:
             safe_execute(self.send_message, url, payload, receiver, _with_transaction=False)
+
+
+def esc_format(text):
+    """Return text with formatting escaped
+
+    Markdown requires a backslash before literal underscores or asterisk, to
+    avoid formatting to bold or italics.
+    """
+    return str(text).replace("_", "\\_").replace("*", "\\*").replace('`', '\\`')
