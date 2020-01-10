@@ -95,7 +95,7 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
                         '{project_name}, {url}, {title}, {message}, {tag[%your_tag%]}. Undefined tags will be shown as [NA]',
                 'validators': [],
                 'required': True,
-                'default': '*[Sentry]* {project_name} {tag[level]}: *{title}*\n``` {message}```\n{url}'
+                'default': '*[Sentry]* {project_name} {tag[level]}: *{title}*\n```\n{message}```\n{url}'
             },
         ]
 
@@ -116,7 +116,7 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
 
         return {
             'text': text,
-            'parse_mode': 'Markdown',
+            'parse_mode': 'MarkdownV2',
         }
 
     def build_url(self, project):
@@ -161,4 +161,4 @@ def esc_format(text):
     Markdown requires a backslash before literal underscores or asterisk, to
     avoid formatting to bold or italics.
     """
-    return str(text).replace("_", "\\_").replace("*", "\\*").replace('`', '\\`')
+    return str(text).replace("_", "\\_").replace("*", "\\*").replace('`', '\\`').replace('[', '\\[')
