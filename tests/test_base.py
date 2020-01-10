@@ -60,7 +60,7 @@ class BaseTest(PluginTestCase):
             url='https://api.telegram.org/botapi:token/sendMessage',
             json={
                 'text': message_text,
-                'parse_mode': 'Markdown',
+                'parse_mode': 'MarkdownV2',
                 'chat_id': '123',
             },
             timeout=30,
