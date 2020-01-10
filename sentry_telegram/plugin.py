@@ -161,4 +161,7 @@ def esc_format(text):
     Markdown requires a backslash before literal underscores or asterisk, to
     avoid formatting to bold or italics.
     """
-    return str(text).replace("_", "\\_").replace("*", "\\*").replace('`', '\\`').replace('[', '\\[')
+    for symbol in ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']:
+        text = str(text).replace(symbol, '\\'+symbol)
+
+    return text
