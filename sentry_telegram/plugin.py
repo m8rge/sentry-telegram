@@ -9,6 +9,8 @@ from sentry.plugins.bases import notify
 from sentry.http import safe_urlopen
 from sentry.utils.safe import safe_execute
 
+from markdown_strings import esc_format
+
 from . import __version__, __doc__ as package_doc
 
 
@@ -101,17 +103,14 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
 
     def build_message(self, group, event):
         the_tags = defaultdict(lambda: '[NA]')
-        the_tags.update({k: v for k, v in event.tags})
+        the_tags.update({k: esc_format(v) for k, v in event.tags})
         names = {
-            'title': event.title,
+            'title': esc_format(event.title),
             'tag': the_tags,
-            'message': event.message,
-            'project_name': group.project.name,
-            'url': group.get_absolute_url(),
+            'message': esc_format(event.message),
+            'project_name': esc_format(group.project.name),
+            'url': esc_format(group.get_absolute_url()),
         }
-        names['title'] = names['title'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
-        names['message'] = names['message'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
-        names['project_name'] = names['project_name'].replace('*', '\\*').replace('`', '\\`').replace('_', '\\_')
 
         template = self.get_message_template(group.project)
 
@@ -142,7 +141,6 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
             url=url,
             json=payload,
         )
-        self.logger.debug('Send success')
         self.logger.debug('Response code: %s, content: %s' % (response.status_code, response.content))
         self.logger.log(response.status_code != 200 if logging.ERROR else logging.INFO,
                         'Response code: %s, content: %s' % (response.status_code, response.content))
