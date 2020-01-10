@@ -142,6 +142,8 @@ class TelegramNotificationsPlugin(notify.NotificationPlugin):
             url=url,
             json=payload,
         )
+        self.logger.debug('Send success')
+        self.logger.debug('Response code: %s, content: %s' % (response.status_code, response.content))
         self.logger.log(response.status_code != 200 if logging.ERROR else logging.INFO,
                         'Response code: %s, content: %s' % (response.status_code, response.content))
 
