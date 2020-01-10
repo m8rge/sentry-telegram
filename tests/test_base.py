@@ -23,7 +23,7 @@ class BaseTest(PluginTestCase):
         super(BaseTest, self).setUp()
         self.initialized_plugin = self.plugin()
         self.message_text = '*[Sentry]* Bar error: This is an example %(platform)s exception\n' \
-                            'This is an example %(platform)s exception raven.scripts.runner in main\n' \
+                            'This is an example %(platform)s exception raven\\.scripts\\.runner in main\n' \
                             'http://testserver/baz/bar/issues/1/' % {'platform': self.get_platform_name_str()}
 
     def test_is_registered(self):
